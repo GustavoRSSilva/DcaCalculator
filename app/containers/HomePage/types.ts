@@ -3,7 +3,8 @@ import * as actions from './actions';
 
 /* --- STATE --- */
 interface HomePageState {
-    readonly default: any;
+    readonly bitcoinPrices: any;
+    readonly error: any;
 }
 
 /* --- ACTIONS --- */

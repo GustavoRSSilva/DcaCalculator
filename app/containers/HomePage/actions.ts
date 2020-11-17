@@ -12,6 +12,6 @@ import ActionTypes from './constants';
 
 export const fetchBitcoinPrices = () => action(ActionTypes.FETCH_BITCOIN_PRICES);
 export const fetchBitcoinPricesSuccess = (bitcoinPrices: BitcoinPrices) =>
-    action(ActionTypes.FETCH_BITCOIN_PRICES_SUCCESS, { bitcoinPrices });
+    action(ActionTypes.FETCH_BITCOIN_PRICES_SUCCESS, bitcoinPrices);
 export const fetchBitcoinPricesRejected = (error: ResponseError) =>
-    action(ActionTypes.FETCH_BITCOIN_PRICES_REJECTED, { error });
+    action(ActionTypes.FETCH_BITCOIN_PRICES_REJECTED, error);

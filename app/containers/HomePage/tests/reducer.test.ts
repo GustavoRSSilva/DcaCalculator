@@ -6,7 +6,8 @@ describe('homePageReducer', () => {
     let state: ContainerState;
     beforeEach(() => {
         state = {
-            default: null,
+            bitcoinPrices: null,
+            error: null,
         };
     });
 

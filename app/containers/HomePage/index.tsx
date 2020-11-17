@@ -4,7 +4,7 @@
  *
  */
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { useSelector, useDispatch } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
@@ -15,6 +15,7 @@ import makeSelectHomePage from './selectors';
 import reducer from './reducer';
 import saga from './saga';
 import messages from './messages';
+import { fetchBitcoinPrices } from './actions';
 
 const stateSelector = createStructuredSelector({
     homePage: makeSelectHomePage(),
@@ -27,9 +28,11 @@ function HomePage() {
     useInjectReducer({ key: 'homePage', reducer: reducer });
     useInjectSaga({ key: 'homePage', saga: saga });
 
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { homePage } = useSelector(stateSelector);
     const dispatch = useDispatch(); // eslint-disable-line @typescript-eslint/no-unused-vars
+    useEffect(() => {
+        dispatch(fetchBitcoinPrices());
+    });
     return (
         <div>
             <FormattedMessage {...messages.header} />
