@@ -1,22 +1,43 @@
 /*
+ *
  * HomePage
  *
- * This is the first thing users see of our App, at the '/' route
- *
- * NOTE: while this component should technically be a stateless functional
- * component (SFC), hot reloading does not currently support SFCs. If hot
- * reloading is not a necessity for you then you can refactor it and remove
- * the linting exception.
  */
 
-import * as React from 'react';
+import React, { useEffect } from 'react';
 import { FormattedMessage } from 'react-intl';
-import messages from './messages';
+import { useSelector, useDispatch } from 'react-redux';
+import { createStructuredSelector } from 'reselect';
 
-export default function HomePage() {
+import { useInjectReducer, useInjectSaga } from 'redux-injectors';
+
+import makeSelectHomePage from './selectors';
+import reducer from './reducer';
+import saga from './saga';
+import messages from './messages';
+import { fetchBitcoinPrices } from './actions';
+
+const stateSelector = createStructuredSelector({
+    homePage: makeSelectHomePage(),
+});
+
+// interface Props {}
+
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+function HomePage() {
+    useInjectReducer({ key: 'homePage', reducer: reducer });
+    useInjectSaga({ key: 'homePage', saga: saga });
+
+    const { homePage } = useSelector(stateSelector);
+    const dispatch = useDispatch(); // eslint-disable-line @typescript-eslint/no-unused-vars
+    useEffect(() => {
+        dispatch(fetchBitcoinPrices());
+    });
     return (
-        <h1>
+        <div>
             <FormattedMessage {...messages.header} />
-        </h1>
+        </div>
     );
 }
+
+export default HomePage;

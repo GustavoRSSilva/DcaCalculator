@@ -4,6 +4,7 @@
 
 const path = require('path');
 const webpack = require('webpack');
+require('dotenv').config();
 
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 
@@ -120,6 +121,7 @@ module.exports = (options) => ({
         // drop any unreachable code.
         new webpack.EnvironmentPlugin({
             NODE_ENV: 'development',
+            COIN_DESK_BITCOIN_PRICE_URL: process.env.COIN_DESK_BITCOIN_PRICE_URL
         }),
         // Run typescript checker
         new ForkTsCheckerWebpackPlugin({ checkSyntacticErrors: true }),
