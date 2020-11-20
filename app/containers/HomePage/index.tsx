@@ -32,7 +32,7 @@ function HomePage() {
     const dispatch = useDispatch(); // eslint-disable-line @typescript-eslint/no-unused-vars
     useEffect(() => {
         dispatch(fetchBitcoinPrices());
-    });
+    }, []);
     return (
         <div>
             <FormattedMessage {...messages.header} />
