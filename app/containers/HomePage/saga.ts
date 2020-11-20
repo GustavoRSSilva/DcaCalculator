@@ -3,6 +3,7 @@ import ActionTypes from 'containers/HomePage/constants';
 import { fetchBitcoinPricesSuccess, fetchBitcoinPricesRejected } from 'containers/HomePage/actions';
 import request from 'utils/request';
 import config from 'config';
+import { getTodayDate } from 'utils/index';
 
 /**
  * Fetch Bitcoin price
@@ -10,9 +11,10 @@ import config from 'config';
 export function* fetchBitcoinPrice() {
     try {
         // Call our request helper (see 'utils/request')
-        const requestURL = `${config.COIN_DESK_BITCOIN_PRICE_URL}?`;
+        const todayDate = getTodayDate();
+        const requestURL = `${config.COIN_DESK_BITCOIN_PRICE_URL}?start=2013-09-01&end=${todayDate}`;
         const bitcoinPrices = yield call(request, requestURL);
-        yield put(fetchBitcoinPricesSuccess(bitcoinPrices));
+        yield put(fetchBitcoinPricesSuccess(bitcoinPrices.bpi));
     } catch (err) {
         yield put(fetchBitcoinPricesRejected(err));
     }
