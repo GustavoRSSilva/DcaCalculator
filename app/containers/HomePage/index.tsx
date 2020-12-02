@@ -16,7 +16,8 @@ import reducer from './reducer';
 import saga from './saga';
 import messages from './messages';
 import { fetchBitcoinPrices } from './actions';
-
+import Canvas from 'components/Canvas';
+import { mapBitcoinPricesToPoints } from 'utils/index';
 const stateSelector = createStructuredSelector({
     homePage: makeSelectHomePage(),
 });
@@ -33,9 +34,17 @@ function HomePage() {
     useEffect(() => {
         dispatch(fetchBitcoinPrices());
     }, []);
+    const startDate = '2020-11-01';
+    const endDate = '2020-12-03';
+    const bitcoinPrices = homePage.homePage.bitcoinPrices;
+    if (!bitcoinPrices) {
+        return null;
+    }
+    const points = mapBitcoinPricesToPoints(startDate, endDate, bitcoinPrices);
     return (
         <div>
             <FormattedMessage {...messages.header} />
+            <Canvas points={points} />
         </div>
     );
 }

@@ -1,6 +1,6 @@
 /**
  *
- * Tests for HomePage
+ * Tests for Canvas
  *
  * @see https://github.com/react-boilerplate/react-boilerplate/tree/master/docs/testing
  *
@@ -9,27 +9,18 @@
 import React from 'react';
 import { render } from '@testing-library/react';
 import { IntlProvider } from 'react-intl';
-import { Provider } from 'react-redux';
-import history from 'utils/history';
+// import 'jest-dom/extend-expect'; // add some helpful assertions
 
-import HomePage from '../index';
+import Canvas from '../index';
 import { DEFAULT_LOCALE } from '../../../locales';
-import configureStore from '../../../configureStore';
-describe('<HomePage />', () => {
-    let store;
 
-    beforeEach(() => {
-        store = configureStore({}, history);
-    });
-
-    it.skip('Expect to not log errors in console', () => {
+describe('<Canvas />', () => {
+    it('Expect to not log errors in console', () => {
         const spy = jest.spyOn(global.console, 'error');
         render(
-            <Provider store={store}>
-                <IntlProvider locale={DEFAULT_LOCALE}>
-                    <HomePage />
-                </IntlProvider>
-            </Provider>,
+            <IntlProvider locale={DEFAULT_LOCALE}>
+                <Canvas points={[]} />
+            </IntlProvider>,
         );
         expect(spy).not.toHaveBeenCalled();
     });
@@ -43,11 +34,9 @@ describe('<HomePage />', () => {
         const {
             container: { firstChild },
         } = render(
-            <Provider store={store}>
-                <IntlProvider locale={DEFAULT_LOCALE}>
-                    <HomePage />
-                </IntlProvider>
-            </Provider>,
+            <IntlProvider locale={DEFAULT_LOCALE}>
+                <Canvas points={[]} />
+            </IntlProvider>,
         );
         expect(firstChild).toMatchSnapshot();
     });
