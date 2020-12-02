@@ -16,7 +16,8 @@ import reducer from './reducer';
 import saga from './saga';
 import messages from './messages';
 import { fetchBitcoinPrices } from './actions';
-
+import Canvas from 'components/Canvas';
+import { mapBitcoinPricesToPoints } from 'utils/index';
 const stateSelector = createStructuredSelector({
     homePage: makeSelectHomePage(),
 });
@@ -33,9 +34,12 @@ function HomePage() {
     useEffect(() => {
         dispatch(fetchBitcoinPrices());
     }, []);
+    const bitcoinPrices = homePage.homePage.bitcoinPrices;
+    const points = mapBitcoinPricesToPoints('1', '1', bitcoinPrices);
     return (
         <div>
             <FormattedMessage {...messages.header} />
+            <Canvas points={points} />
         </div>
     );
 }

@@ -25,7 +25,7 @@ import App from 'containers/App';
 import LanguageProvider from 'containers/LanguageProvider';
 
 // Load the favicon
-import '!file-loader?name=[name].[ext]!./images/favicon.ico';
+import '!file-loader?name=[name].[ext]!./assets/images/favicon.ico';
 
 import { HelmetProvider } from 'react-helmet-async';
 
