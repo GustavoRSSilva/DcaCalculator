@@ -1,5 +1,0 @@
-export const REPEAT_DAILY = 'DAILY';
-export const REPEAT_WEEKLY = 'WEEKLY';
-export const REPEAT_TWICE_WEEKLY = 'TWICE_WEEKLY';
-export const REPEAT_MONTHLY = 'MONTHLY';
-export const DEFAULT_REPEAT_PERIOD = REPEAT_MONTHLY; // DAYLY

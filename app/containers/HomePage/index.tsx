@@ -34,8 +34,13 @@ function HomePage() {
     useEffect(() => {
         dispatch(fetchBitcoinPrices());
     }, []);
+    const startDate = '2020-11-01';
+    const endDate = '2020-12-03';
     const bitcoinPrices = homePage.homePage.bitcoinPrices;
-    const points = mapBitcoinPricesToPoints('1', '1', bitcoinPrices);
+    if (!bitcoinPrices) {
+        return null;
+    }
+    const points = mapBitcoinPricesToPoints(startDate, endDate, bitcoinPrices);
     return (
         <div>
             <FormattedMessage {...messages.header} />
