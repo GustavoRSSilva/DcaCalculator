@@ -18,6 +18,8 @@ import messages from './messages';
 import { fetchBitcoinPrices } from './actions';
 import Canvas from 'components/Canvas';
 import { mapBitcoinPricesToPoints } from 'utils/index';
+import { Repeat } from 'types/common';
+
 const stateSelector = createStructuredSelector({
     homePage: makeSelectHomePage(),
 });
@@ -40,7 +42,7 @@ function HomePage() {
     if (!bitcoinPrices) {
         return null;
     }
-    const points = mapBitcoinPricesToPoints(startDate, endDate, bitcoinPrices);
+    const points = mapBitcoinPricesToPoints(startDate, endDate, bitcoinPrices, 50, Repeat.DAILY);
     return (
         <div>
             <FormattedMessage {...messages.header} />
