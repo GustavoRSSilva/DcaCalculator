@@ -11,24 +11,16 @@ module.exports = require('./webpack.base.babel')({
   mode: 'production',
 
   // In production, we skip all hot-reloading stuff
-  entry: path.join(process.cwd(), 'app/app.tsx'),
+  entry: [
+    require.resolve('react-app-polyfill/ie11'),
+    path.join(process.cwd(), 'app/app.js'),
+  ],
 
   // Utilize long-term caching by adding content hashes (not compilation hashes) to compiled assets
   output: {
     filename: '[name].[chunkhash].js',
     chunkFilename: '[name].[chunkhash].chunk.js',
   },
-
-  tsLoaders: [
-    { loader: 'babel-loader' }, // using babel after typescript transpiles to target es6
-    {
-      loader: 'ts-loader',
-      options: {
-        transpileOnly: true, // fork-ts-checker-webpack-plugin is used for type checking
-        logLevel: 'info',
-      },
-    },
-  ],
 
   optimization: {
     minimize: true,
@@ -46,6 +38,8 @@ module.exports = require('./webpack.base.babel')({
             ascii_only: true,
           },
         },
+        parallel: true,
+        cache: true,
         sourceMap: true,
       }),
     ],
@@ -93,9 +87,6 @@ module.exports = require('./webpack.base.babel')({
     // Put it in the end to capture all the HtmlWebpackPlugin's
     // assets manipulations and do leak its manipulations to HtmlWebpackPlugin
     new OfflinePlugin({
-      // replace with 'cache-first' for faster performance. See https://github.com/NekR/offline-plugin/blob/master/docs/options.md#responsestrategy-cache-first--network-first
-      responseStrategy: 'network-first',
-
       relativePaths: false,
       publicPath: '/',
       appShell: '/',
