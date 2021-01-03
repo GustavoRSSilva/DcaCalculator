@@ -4,7 +4,7 @@
  *
  */
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
@@ -17,10 +17,17 @@ import makeSelectHomePage from './selectors';
 import reducer from './reducer';
 import saga from './saga';
 import messages from './messages';
+import { fetchBitcoinPrices } from './actions';
 
-export function HomePage() {
+export function HomePage(props) {
   useInjectReducer({ key: 'homePage', reducer });
   useInjectSaga({ key: 'homePage', saga });
+  const { onFetchBitcoinPrices } = props;
+
+  useEffect(() => {
+    // fetch bitcoin prices
+    onFetchBitcoinPrices();
+  }, []);
 
   return (
     <div>
@@ -31,15 +38,16 @@ export function HomePage() {
 
 HomePage.propTypes = {
   dispatch: PropTypes.func.isRequired,
+  onFetchBitcoinPrices: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({
   homePage: makeSelectHomePage(),
 });
 
-function mapDispatchToProps(dispatch) {
+export function mapDispatchToProps(dispatch) {
   return {
-    dispatch,
+    onFetchBitcoinPrices: () => dispatch(fetchBitcoinPrices()),
   };
 }
 
